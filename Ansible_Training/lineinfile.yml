@@ -1,0 +1,25 @@
+---
+ - hosts: group1
+   become: true
+   vars:
+     service_name: "httpd"
+
+   tasks:
+     - name: stop httpd service
+       service: name={{service_name}} state=stopped
+    
+     - name: lineinfile demo
+       lineinfile:
+         dest: /etc/httpd/conf/httpd.conf
+         line: '#This is lineinfile demo'
+         insertafter: 'ServerRoot "/etc/httpd"'
+       notify:
+         - httpd_restart
+   
+   handlers:
+     - name: "httpd_stop"
+       service: name={{service_name}} state=stopped
+
+     - name: "httpd_restart"
+       service: name={{service_name}} enabled=true state=restarted
+

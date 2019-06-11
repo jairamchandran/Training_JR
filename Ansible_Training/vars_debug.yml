@@ -1,0 +1,33 @@
+---
+ - hosts: group1
+   become: true
+   tasks:
+     - name: uninstall httpd
+       yum: name=httpd state=removed
+       register: install_status
+
+     - name: print status removed
+       debug: var=install_status
+
+     - name: Install httpd
+       yum: name=httpd state=installed
+       register: install_status
+       
+     - name: print installation status
+       debug: var=install_status 
+
+     - name: start service
+       service: name=httpd enabled=yes state=started
+
+     - name: check httpd version
+       command: rpm -q httpd
+       register: check_version
+
+     - name: debugging message
+       debug: msg="httpd is installed" {{ check_version.stdout }}
+       when: install_status|success
+
+     - name: debugging message
+       debug: msg="httpd is not installed"
+       when: install_status|failed
+

@@ -1,0 +1,12 @@
+---
+ - hosts: group1
+   become: true
+   vars:
+     passwd: devuser
+ 
+   tasks:
+     - name: "create_new_group"
+       group: name=devops state=present
+
+     - name: "create_new_user"
+       user: name="devuser" password={{ passwd }} group="devops" shell=/bin/bash home=/home/devuser

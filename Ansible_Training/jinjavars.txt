@@ -1,0 +1,17 @@
+Variables are used to store values in programs and as the name suggests the values can be changed throughout the program. These values are essential to deciding the code flow. Ansible variables help to determine how the tasks execute on different systems based on the values assigned to these variables.
+
+Ansible variable names should be letters, numbers, underscores and they should always start with a letter.If you need to access all the variables, you can use the with_items structure to loop through all the values. For more details n how to use the loop structure for this tutorial.
+
+{{static_template}}
+
+port: {{port_no}}
+
+Basic Ansible Variable example
+In the playbook, we can give a variable in ‘variable_name: variable_value‘ format. And we can use the variable_name inside double braces anywhere in the playbook. In the following task, I am declaring a variable hello with value world and is referenced in one of the tasks. The task will output the value world.
+
+{{package_names}}
+
+Ansible template for loop example
+{% for i in package_names%}
+  package name is package_names {{ i }}
+{% endfor %}

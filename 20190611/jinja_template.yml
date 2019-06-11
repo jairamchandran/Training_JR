@@ -1,0 +1,20 @@
+---
+ - hosts: group1
+   become: true
+   vars:
+     static_template: "#This is jinja2 template demo"
+     port_no: 80
+     service_name: "httpd"
+     package_names: ["php","oracle","java"]
+
+   tasks:
+     - name: Ansible template example
+       template:
+         src=jinjavars.txt
+         dest=/var/tmp/jinja_test.txt
+       notify:
+         - httpd_restart
+   
+   handlers:
+     - name: "httpd_restart"
+       service: name={{service_name}} state=restarted

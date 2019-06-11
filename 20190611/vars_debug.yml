@@ -24,7 +24,7 @@
        register: check_version
 
      - name: debugging message
-       debug: msg="httpd is installed {{ check_version.stdout }}"
+       debug: msg="httpd is installed" {{ check_version.stdout }}
        when: install_status|success
 
      - name: debugging message
